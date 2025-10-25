@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Canva Site – Fixed Version</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav button {
+            margin: 0 10px;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: white;
+            color: #007bff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        nav button:hover {
+            background: #e9ecef;
+        }
+        section {
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem auto;
+            max-width: 350px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        /* Hide modals by default */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .close-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+        <nav>
+            <button id="login-btn">Login</button>
+            <button id="signup-btn">Sign Up</button>
+            <button id="dashboard-btn">Dashboard</button>
+            <button id="logout-btn">Logout</button>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Home Section</h2>
+        <div class="card">
+            <img src="https://via.placeholder.com/350x200" alt="Sample">
+            <p>Welcome to our amazing platform! Explore and enjoy.</p>
+            <button class="order-btn" data-product="Sample Product">Order Now</button>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-login">X</button>
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" placeholder="Username" required><br><br>
+                <input type="password" placeholder="Password" required><br><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-signup">X</button>
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="text" placeholder="Username" required><br><br>
+                <input type="email" placeholder="Email" required><br><br>
+                <input type="password" placeholder="Password" required><br><br>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal" id="order-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-order">X</button>
+            <h2>Place Your Order</h2>
+            <form id="order-form">
+                <input type="text" id="order-product" readonly><br><br>
+                <input type="text" placeholder="Your Name" required><br><br>
+                <input type="text" placeholder="Address" required><br><br>
+                <button type="submit">Submit Order</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Your Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+        function hideModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            alert("Sign up successful!");
+            hideModal('signup-modal');
+        }
+        function handleLogin(e) {
+            e.preventDefault();
+            alert("Login successful!");
+            hideModal('login-modal');
+        }
+        function handleOrder(e) {
+            e.preventDefault();
+            alert("Order submitted successfully!");
+            hideModal('order-modal');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar buttons
+            document.getElementById('login-btn').addEventListener('click', () => showModal('login-modal'));
+            document.getElementById('signup-btn').addEventListener('click', () => showModal('signup-modal'));
+            document.getElementById('dashboard-btn').addEventListener('click', () => alert('Dashboard loading...'));
+            document.getElementById('logout-btn').addEventListener('click', () => alert('Logged out successfully!'));
+
+            // Close modal buttons
+            document.getElementById('close-login').addEventListener('click', () => hideModal('login-modal'));
+            document.getElementById('close-signup').addEventListener('click', () => hideModal('signup-modal'));
+            document.getElementById('close-order').addEventListener('click', () => hideModal('order-modal'));
+
+            // Forms
+            document.getElementById('signup-form').addEventListener('submit', handleSignup);
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('order-form').addEventListener('submit', handleOrder);
+
+            // Order buttons
+            document.querySelectorAll('.order-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const product = e.target.getAttribute('data-product');
+                    document.getElementById('order-product').value = product;
+                    showModal('order-modal');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
